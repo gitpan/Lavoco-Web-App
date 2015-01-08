@@ -1,5 +1,5 @@
 ---
-abstract: 'Experimental framework.'
+abstract: 'Experimental framework with 2 constraints, FastCGI and Template::Toolkit.'
 author:
   - 'Rob Brown <rob@intelcompute.com>'
 build_requires:
@@ -35,4 +35,4 @@ requires:
   Test::Exception: '0'
   Test::More: '0'
   Time::HiRes: '0'
-version: '0.01'
+version: '0.02'

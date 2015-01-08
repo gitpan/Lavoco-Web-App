@@ -22,17 +22,17 @@ $Data::Dumper::Sortkeys = 1;
 
 =head1 NAME
 
-Lavoco::Web::App - Experimental framework.
+Lavoco::Web::App - Experimental framework with 2 constraints, FastCGI and Template::Toolkit.
 
 Framework to run small web apps, URL dispatching based on a flexible config file, rendering Template::Toolkit templates.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 $VERSION = eval $VERSION;
 
@@ -60,7 +60,7 @@ This is an experimental framework to control various small websites, use at your
 
 Creates a new instance of the web-app object.
 
-=head2 Instance Methods
+=head2 Attributes
 
 =cut
 
@@ -147,6 +147,16 @@ Number of FastCGI process to spawn, 5 by default.
 =head3 templates
 
 The directory containing the TT templates, by default it's C<$app-E<gt>base . '/templates'>.
+
+=head3 filename
+
+Filename for the config file, default is C<app.json> and only JSON is currently supported.
+
+=head3 config
+
+The config as a hash-reference.
+
+=head2 Instance Methods
 
 =head3 start
 
@@ -405,7 +415,7 @@ The app should be a simple Perl script in a folder with the following structure:
 
 The config file is read for each and every request, this makes adding new pages easy, without the need to restart the application.
 
-Currently only JSON is supported for the config file, named C<app.json>.  This should be placed in the C<base> directory of your application.
+The config file should be placed in the C<base> directory of your application.
 
 See the C<examples> directory for a sample JSON config file, something like the following...
 
@@ -426,9 +436,9 @@ See the C<examples> directory for a sample JSON config file, something like the 
 
 The entire config hash is available in all templates via C<[% app.config %]>, there are only a couple of mandatory/reserved attributes.
 
-The mandatory field in the config is C<pages>, which is an array of JSON objects.
+The mandatory field in the config is C<pages>, an array of pages.
 
-Each C<page> object should contain a C<path> (for URL matching) and C<template> to render.
+Each C<page> should contain a C<path> (for URL matching) and C<template> to render.
 
 All other fields are completely up to you, to fit your requirements.
 
@@ -475,8 +485,6 @@ sub _handler
 
         $stash{ app }->_reload_config( log => $log );
 
-        $log->debug( \%stash );
-        
         ###############
         # sitemap xml #
         ###############
@@ -698,8 +706,6 @@ sub _send_email
 }
 
 =head1 TODO
-
-More documentation.
 
 Deep recursion for page/path lookups.
 

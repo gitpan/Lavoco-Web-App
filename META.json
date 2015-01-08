@@ -1,5 +1,5 @@
 {
-   "abstract" : "Experimental framework.",
+   "abstract" : "Experimental framework with 2 constraints, FastCGI and Template::Toolkit.",
    "author" : [
       "Rob Brown <rob@intelcompute.com>"
    ],
@@ -53,5 +53,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "version" : "0.02"
 }
